@@ -1,10 +1,15 @@
 import React from 'react'
-import Nav from './components/Nav'
+import Nav from './components/Nav';
+import Rout from './route';
+import { BrowserRouter } from 'react-router-dom';
 
-function App() {
+const App = () => {
   return (
     <>
-    <Nav />
+    <BrowserRouter>
+      <Nav />
+      <Rout />
+    </BrowserRouter>
     </>
   )
 }
