@@ -1,13 +1,55 @@
-import React from 'react'
+import React  from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BsEye } from 'react-icons/bs';
 import { AiOutlineHeart } from 'react-icons/ai';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import ProductDetail from './ProductDetail'
 import './Product.css'
 
-const Product = () => {
+const Product = ({product, setProduct, detail, view, close, setClose, addtocart}) => {
+
+  const filterproduct = (product) =>
+  {
+    const update = ProductDetail.filter((x) =>
+    {
+      return x.Cat === product;
+    })
+    setProduct(update);
+  }
+  const AllProducts = () =>
+  {
+    setProduct(ProductDetail);
+  }
   return (
-    <>
+    <> 
+    {
+      close ?
+      <div className='product_detail'> 
+        <div className='container'>
+          <button onClick={() => setClose(false)} className='closebtn'><AiOutlineCloseCircle /></button>
+          {
+            detail.map((curElm) =>
+            {
+              return (
+                <div className='productbox'>
+                  <div className='img-box'>
+                    <img src={curElm.Img} alt={curElm.Title}></img>
+                  </div>
+                  <div className='detail'>
+                    <h4>{curElm.Cat}</h4>
+                    <h2>{curElm.Title}</h2>
+                    <p>A Screen Everyone Will Love: Whether your family is streaming or video chatting with friends tablet A8...</p>
+                    <h3>{curElm.Price}</h3>
+                    <button>Add To Cart</button>  
+                  </div>
+                </div>
+              )
+            })
+          }
+        </div>
+      </div> : null
+    }
+      
       <div className='products'>
         <h2>#Products</h2>
         <p>Home . products</p>
@@ -16,18 +58,19 @@ const Product = () => {
               <div className='categories'>
                 <h3>Categories</h3>
                 <ul>
-                  <li>Tablet</li>
-                  <li>Smart Watch</li>
-                  <li>Headphone</li>
-                  <li>Camera</li>
-                  <li>Gaming</li>
+                  <li onClick={() => AllProducts ()}>All Products</li>
+                  <li onClick={() => filterproduct ("Tablet")}>Tablet</li>
+                  <li onClick={() => filterproduct ("Smart Watch")}>Smart Watch</li>
+                  <li onClick={() => filterproduct ("Headphone")}>Headphone</li>
+                  <li onClick={() => filterproduct ("Camera")}>Camera</li>
+                  <li onClick={() => filterproduct ("Gaming")}>Gaming</li>
                 </ul>
               </div>
             </div>
             <div className='productbox'>
               <div className='contant'>
                 {
-                  ProductDetail.map((curElm) =>
+                  product.map((curElm) =>
                   {
                     return(
                       <>
@@ -35,8 +78,8 @@ const Product = () => {
                             <div className='img_box'>
                               <img src={curElm.Img} alt={curElm.Title}></img>
                               <div className='icon'>
-                                <li><AiOutlineShoppingCart /></li>
-                                <li><BsEye /></li>
+                                <li onClick={() => addtocart(curElm)}><AiOutlineShoppingCart /></li>
+                                <li onClick={() => view(curElm)}><BsEye /></li>
                                 <li><AiOutlineHeart /></li>
                               </div>
                             </div>
@@ -48,7 +91,7 @@ const Product = () => {
                                 {curElm.Title}
                               </h3>
                               <h4>
-                                $ {curElm.Price}
+                                ${curElm.Price}
                               </h4>
                             </div>
                           </div>                      

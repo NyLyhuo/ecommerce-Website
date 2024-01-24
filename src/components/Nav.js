@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaTruckMoving } from 'react-icons/fa';
 import { AiOutlineUser } from 'react-icons/ai';
 import { AiOutlineHeart } from 'react-icons/ai';
@@ -8,7 +8,9 @@ import { CiLogout } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
 import './Nav.css'
 
-const Nav = () => {
+const Nav = ({searchbtn}) => {
+    const[search, setSearch] = useState()
+    //const { loginWithRedirect, logout, user, isAuthenticated} = useAuth0();
   return (
     <>
         <div className='free'>
@@ -24,8 +26,8 @@ const Nav = () => {
                     <img src='./img/logo.svg' alt='logo'></img>
                 </div>
                 <div className='search_box'>
-                    <input type="text" value='' placeholder='Search Your Product...' autoComplete='off'/>
-                    <button>Search</button>
+                    <input type="text" value={search} placeholder='Search Your Product...' autoComplete='off' onChange={(e) => setSearch(e.target.value)}/>
+                    <button onClick={() => searchbtn (search)}>Search</button>
                 </div>
                 <div className='icon'>
                     <div className='account'>

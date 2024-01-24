@@ -5,16 +5,45 @@ import { BsCurrencyDollar } from 'react-icons/bs';
 import { CiPercent } from 'react-icons/ci';
 import { BiHeadphone } from 'react-icons/bi';
 import { AiOutlineHeart } from 'react-icons/ai';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BsEye } from 'react-icons/bs';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import HomeProduct from './HomeProduct';
 import './Home.css'
 import { BrowserRouter, Link } from 'react-router-dom'
 
-const Home = () => {
+const Home = ({detail, view, close, setClose, addtocart}) => {
   const [homeProduct, setHomeProduct] = useState(HomeProduct)
   return (
     <>
+    {
+      close ?
+      <div className='product_detail'> 
+        <div className='container'>
+          <button onClick={() => setClose(false)} className='closebtn'><AiOutlineCloseCircle /></button>
+          {
+            detail.map((curElm) =>
+            {
+              return (
+                <div className='productbox'>
+                  <div className='img-box'>
+                    <img src={curElm.Img} alt={curElm.Title}></img>
+                  </div>
+                  <div className='detail'>
+                    <h4>{curElm.Cat}</h4>
+                    <h2>{curElm.Title}</h2>
+                    <p>A Screen Everyone Will Love: Whether your family is streaming or video chatting with friends tablet A8...</p>
+                    <h3>{curElm.Price}</h3>
+                    <button>Add To Cart</button>  
+                  </div>
+                </div>
+              )
+            })
+          }
+        </div>
+      </div> : null
+    }
+
     <div className='top_banner'>
         <div className='container'>
             <div className='detail'>
@@ -129,8 +158,8 @@ const Home = () => {
                   <div className='img_box'>
                     <img src={curElm.Img} alt={curElm.Title}></img>
                     <div className='icon'>
-                      <li><AiOutlineShoppingCart /></li>
-                      <li><BsEye /></li>
+                      <li onClick={() => addtocart(curElm)}><AiOutlineShoppingCart /></li>
+                      <li onClick={() => view (curElm)}><BsEye /></li>
                       <li><AiOutlineHeart /></li>
                     </div>
                   </div>
@@ -142,7 +171,7 @@ const Home = () => {
                       {curElm.Title}
                     </h3>
                     <h4>
-                      {curElm.Price}
+                      ${curElm.Price}
                     </h4>
                   </div>
                 </div>
